@@ -6,7 +6,7 @@
     'website': "http://jadam.alwaysdata.net",
     'category': 'Uncategorized',
     'version': '16.0',
-    'liescence': 'LGPL-3'
+    'liescence': 'LGPL-3',
     'depends': ['base', 'sale_management', 'calendar', 'hr'],
     'data': [
     ]
