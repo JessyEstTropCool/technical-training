@@ -2,9 +2,9 @@
 <odoo>
     <data>
         <record model="ir.ui.view" id="sale_order_view_inherit">
-            <field name="name">sale.order.view.inherit1</field>
-            <field name="model">sale.order.view.inherit</field>
-            <field name="inherit_id">sale.order.view.inherit</field>
+            <field name="name">sale.order.view.trainingdate</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form">
             <field name="arch" type="xml">
                 <xpath expr="/form/sheet/notebook/page/field[@name='tax_id']" position="after">
                     <field name="training_date" />
