@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <record id="res_group_view_inherit">
-            <field name="name">res.groups.view.inherit</field>
+            <field name="name">res.groups.view.maxamount</field>
             <field name="model">res.groups</field>
             <field name="inherit_id">base.view_groups_form</field>
             <field name="arch" type="xml">
