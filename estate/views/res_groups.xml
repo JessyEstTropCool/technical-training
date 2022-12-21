@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="res_group_view_inherit">
+        <record model="ir.ui.view" id="res_group_view_inherit">
             <field name="name">res.groups.view.maxamount</field>
             <field name="model">res.groups</field>
             <field name="inherit_id" ref="base.view_groups_form" />
