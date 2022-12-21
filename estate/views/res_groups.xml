@@ -6,7 +6,7 @@
             <field name="model">res.groups</field>
             <field name="inherit_id" ref="base.view_groups_form" />
             <field name="arch" type="xml">
-                <xpath expr="form/sheet/group/field[@name='share']" position="after">
+                <xpath expr="/form/sheet/group/field[@name='share']" position="after">
                     <field name="amount_max" attrs="Training Max Price (Approval)" />
                 </xpath>
             </field>
