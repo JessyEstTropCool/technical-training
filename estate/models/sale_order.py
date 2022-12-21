@@ -10,6 +10,7 @@ class SaleOrder(models.Model):
 
         for line in self.order_line:
             if line.training_date and line.selected_employee:
+                raise TimeoutError("What is up mah dude")
                 self.env['calendar.event'].create({
                     'name':'Training',
                     'start_date':line.training_date,
