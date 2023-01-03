@@ -10,6 +10,7 @@ class SaleOrder(models.Model):
 
         for line in self.order_line:
             if line.training_date and line.selected_employee:
+                raise TimeoutError(line.selected_employee.user_partner_id)
                 self.env['calendar.event'].create({
                     'name':'Training',
                     'start_date':line.training_date,
@@ -17,7 +18,7 @@ class SaleOrder(models.Model):
                     'allday':True,
                     'partner_ids':[(4, line.selected_employee.user_partner_id)],
                 })
-                #raise TimeoutError("What is up mah dude")
+                
 
         return res
 
