@@ -11,7 +11,7 @@ class SaleOrder(models.Model):
 
         for line in self.order_line:
             if line.training_date and line.selected_employee:
-                if line.selected_employee.partner_id:
+                if line.selected_employee.user_id:
                     self.env['calendar.event'].create({
                         'name':'Training',
                         'start_date':line.training_date,
