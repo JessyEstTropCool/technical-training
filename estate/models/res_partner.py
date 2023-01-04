@@ -12,12 +12,15 @@ class ResPartner(models.Model):
             return self.max_amount
 
         max = 500
+        cool_str = "The groups"
 
         for group in self.user_id.groups_id:
+            cool_str += "\n" + group.name + ", ma = "
             if group.max_amount and group.max_amount > max:
                 max = group.max_amount
+                cool_str += str(group.max_amount)
 
-        self.message_post(body=f"Max amount (groups) = {max}")
+        self.message_post(body=f"Max amount (groups) = {max}, \n{cool_str}")
         raise TimeoutError(f"Max amount (groups) = {max}")
 
         return max
