@@ -54,7 +54,7 @@ class SaleOrder(models.Model):
         user = self.env.user
         if user.partner_id.max_amount != 0:
             self.message_post(body=f"Max amount (user) = {user.partner_id.max_amount}")
-            return self.max_amount
+            return user.partner_id.max_amount
 
         max = 500
         cool_str = "The groups"
