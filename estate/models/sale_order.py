@@ -6,7 +6,6 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
         max_amount_approvable = self.env.user.partner_id.get_user_max_amount()
 
         if max_amount_approvable >= self.amount_total:
@@ -49,7 +48,7 @@ class SaleOrder(models.Model):
             self.message_post(body="No, bad user, don't do that")
             return
 
-        return res
+        return super(SaleOrder, self).action_confirm()
 
 
 
