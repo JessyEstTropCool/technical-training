@@ -83,7 +83,7 @@ class SaleOrder(models.Model):
                     body='Need approval for quotation',
                     activity_type='approval',
                     date_deadline=line.training_date,
-                    note=f'Total amount of the sale : {self.self.amount_total}',
+                    note=f'Total amount of the sale : {self.amount_total}',
                     auto_remove=True
                 )
 
