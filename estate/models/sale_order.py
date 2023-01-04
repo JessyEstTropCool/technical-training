@@ -81,7 +81,6 @@ class SaleOrder(models.Model):
             if line.training_date and line.selected_employee:
                 self.activity_schedule(
                     'Need approval for quotation',
-                    activity_type='default',
                     date_deadline=line.training_date,
                     note=f'Total amount of the sale : {self.amount_total}',
                     auto_remove=True
