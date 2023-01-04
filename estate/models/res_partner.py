@@ -4,7 +4,7 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
     max_amount = fields.Float(string="Max approval amount") #max amount able to be approve by managers of this group
 
-    def get_user_max_amount(self):
+    def get_user_max_amount(self, user):
         if self.max_amount != 0:
             #self.message_post(body="Max amount (user) = " + self.max_amount)
             raise TimeoutError(f"Max amount (user) = {max}")
@@ -14,8 +14,7 @@ class ResPartner(models.Model):
         max = 500
         cool_str = "The groups"
 
-        for group in self.user_id.groups_id.mapped('name'):
-            raise TimeoutError(group)
+        for group in user.groups_id.mapped('name'):
             cool_str += "\n" + group.name + ", ma = "
             if group.max_amount and group.max_amount > max:
                 max = group.max_amount
@@ -27,7 +26,7 @@ class ResPartner(models.Model):
             g:{cool_str}
             self: {self.name} {self}
             self.user_id: {self.user_id.name} {self.user_id}
-            groups:{self.groups_id}"""
+            groups:{self.user_id.groups_id}"""
         )
 
         return max

@@ -6,7 +6,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     def action_confirm(self):
-        max_amount_approvable = self.env.user.partner_id.get_user_max_amount()
+        max_amount_approvable = self.env.user.partner_id.get_user_max_amount(self.env.user)
 
         if max_amount_approvable >= self.amount_total:
             for line in self.order_line:
