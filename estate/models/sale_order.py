@@ -14,7 +14,7 @@ class SaleOrder(models.Model):
                 if line.selected_employee.user_id:
                     line_partner = line.selected_employee.user_partner_id
                 else:
-                    presumed_partner = models.env['res.partner'].search([('name', '=', line.selected_employee.name)], limit=1)
+                    presumed_partner = self.env['res.partner'].search([('name', '=', line.selected_employee.name)], limit=1)
                     if len(presumed_partner) == 0:
                         line.selected_employee.user_partner_id = self.env['res.partner'].create({
                             'name': line.selected_employee.name,
