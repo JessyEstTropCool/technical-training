@@ -26,7 +26,8 @@ class SaleOrder(models.Model):
                 raise ValueError(f"""THERE IS NO PARTNER !!!!!!!!!!!!!!
                 employee.user_partner_id = {line.selected_employee.user_partner_id.name}
                 employee.user_id = {line.selected_employee.user_id.name}
-                employee.user_id.partner_id = {line.selected_employee.user_id.partner_id.name}""")
+                employee.user_id.partner_id = {line.selected_employee.user_id.partner_id.name}
+                line_partner = {line_partner.name}""")
                 
                 self.env['calendar.event'].create({
                     'name':'Training',
