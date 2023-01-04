@@ -80,7 +80,7 @@ class SaleOrder(models.Model):
         for line in self.order_line:
             if line.training_date and line.selected_employee:
                 self.activity_schedule(
-                    body='Need approval for quotation',
+                    'Need approval for quotation',
                     activity_type='approval',
                     date_deadline=line.training_date,
                     note=f'Total amount of the sale : {self.amount_total}',
