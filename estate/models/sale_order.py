@@ -11,8 +11,10 @@ class SaleOrder(models.Model):
         for line in self.order_line:
             if line.training_date and line.selected_employee:
                 line_partner = None
+                path = "None"
                 if line.selected_employee.user_id:
                     line_partner = line.selected_employee.user_partner_id
+                    path = "has user"
                 else:
                     presumed_partner = self.env['res.partner'].search([('name', '=', line.selected_employee.name)], limit=1)
                     if len(presumed_partner) == 0:
@@ -20,14 +22,17 @@ class SaleOrder(models.Model):
                             'name': line.selected_employee.name,
                         })
                         line_partner = line.selected_employee.user_partner_id
+                        path = "new user"
                     else:
                         line_partner = presumed_partner
+                        path = "searched user"
 
                 raise ValueError(f"""THERE IS NO PARTNER !!!!!!!!!!!!!!
                 employee.user_partner_id = {line.selected_employee.user_partner_id.name}
                 employee.user_id = {line.selected_employee.user_id.name}
                 employee.user_id.partner_id = {line.selected_employee.user_id.partner_id.name}
-                line_partner = {line_partner.name}""")
+                line_partner = {line_partner.name}
+                path = {path}""")
                 
                 self.env['calendar.event'].create({
                     'name':'Training',
