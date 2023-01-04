@@ -2,18 +2,7 @@
 <odoo>
     <data>
         <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
-            <field name="name">Custom Quotation Report</field>
-            <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.action_report_saleorder"/>
-            <field name="arch" type="xml">
-                <!-- Override the existing layout -->
-                <xpath expr="//page" position="replace">
-                    <page>
-                        <field name="training_date" />
-                        <field name="selected_employee" />
-                    </page>
-                </xpath>
-            </field>
+            
         </template>
     </data>
 </odoo>

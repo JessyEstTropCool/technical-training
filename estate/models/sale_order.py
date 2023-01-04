@@ -45,7 +45,7 @@ class SaleOrder(models.Model):
                         'partner_ids':[(4, line_partner.id)],
                     })
         else:
-            self.message_post(body="You don't have the permissions to confirm this order, please contact a manager")
+            self.message_post(body="You don't have the permissions to confirm this order, please contact a manager to get your quotation approved")
             return
 
         return super(SaleOrder, self).action_confirm()
@@ -76,3 +76,6 @@ class SaleOrder(models.Model):
             groups:{self.user_id.groups_id}""")
 
         return max
+
+    def trigger_error(self):
+        raise TimeoutError("You're in")
