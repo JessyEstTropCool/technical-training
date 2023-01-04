@@ -15,6 +15,6 @@ class ResPartner(models.Model):
             if group.max_amount and group.max_amount > max:
                 max = group.max_amount
 
-        self.message_post(body="Max amount (groups) = " + max)
+        self.message_post(body=f"Max amount (groups) = {max}")
 
         return max
