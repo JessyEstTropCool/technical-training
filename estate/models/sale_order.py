@@ -6,7 +6,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     def action_confirm(self):
-        max_amount_approvable = self.env.user.partner_id.get_user_max_amount(self.env.user)
+        max_amount_approvable = self.get_user_max_amount()
 
         if max_amount_approvable >= self.amount_total:
             for line in self.order_line:
@@ -50,5 +50,26 @@ class SaleOrder(models.Model):
 
         return super(SaleOrder, self).action_confirm()
 
+    def get_user_max_amount(self):
+        user = self.env.user
+        if self.max_amount != 0:
+            self.message_post(body="Max amount (user) = " + self.max_amount)
+            return self.max_amount
 
+        max = 500
+        cool_str = "The groups"
 
+        for group in user.groups_id:
+            cool_str += "\n" + group.name + ", ma = "
+            if group.max_amount and group.max_amount > max:
+                max = group.max_amount
+                cool_str += str(group.max_amount)
+
+        self.message_post(body=f"""
+            Max amount (groups) = {max},
+            g:{cool_str}
+            self: {self.name} {self}
+            self.user_id: {self.user_id.name} {self.user_id}
+            groups:{self.user_id.groups_id}""")
+
+        return max
