@@ -52,12 +52,13 @@ class SaleOrder(models.Model):
 
     def get_user_max_amount(self):
         user = self.env.user
-        if self.max_amount != 0:
+        if user.partner_id.max_amount != 0:
             self.message_post(body="Max amount (user) = " + self.max_amount)
             return self.max_amount
 
         max = 500
         cool_str = "The groups"
+        help(user)
 
         for group in user.groups_id:
             cool_str += "\n" + group.name + ", ma = "
