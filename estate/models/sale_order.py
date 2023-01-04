@@ -45,7 +45,7 @@ class SaleOrder(models.Model):
                         'partner_ids':[(4, line_partner.id)],
                     })
         else:
-            self.message_post(body="No, bad user, don't do that")
+            self.message_post(body="You don't have the permissions to confirm this order, please contact a manager")
             return
 
         return super(SaleOrder, self).action_confirm()
@@ -53,7 +53,7 @@ class SaleOrder(models.Model):
     def get_user_max_amount(self):
         user = self.env.user
         if user.partner_id.max_amount != 0:
-            self.message_post(body="Max amount (user) = " + self.max_amount)
+            self.message_post(body="Max amount (user) = " + user.partner_id.max_amount)
             return self.max_amount
 
         max = 500
@@ -62,9 +62,11 @@ class SaleOrder(models.Model):
 
         for group in user.groups_id:
             cool_str += "\n" + group.name + ", ma = "
+            if group.max_amount:
+                cool_str += str(group.max_amount)
+
             if group.max_amount and group.max_amount > max:
                 max = group.max_amount
-                cool_str += str(group.max_amount)
 
         self.message_post(body=f"""
             Max amount (groups) = {max},
