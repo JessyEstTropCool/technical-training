@@ -5,4 +5,13 @@ class ResPartner(models.Model):
     max_amount = fields.Float(string="Max approval amount") #max amount able to be approve by managers of this group
 
     def get_user_max_amount(self):
-        return self.max_amount
+        if self.max_amount != 0:
+            return self.max_amount
+
+        max = 500
+
+        for group in self.user_id.groups_id:
+            if group.max_amount and group.max_amount > max:
+                max = group.max_amount
+
+        return max
