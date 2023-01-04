@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        
+        <record model="ir.ui.view" id="res_partner_view_inherit">
+            <field name="name">res.partner.view.maxamount</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page[@name='sales_purchases']/group/group[@name='Misc']/field[@name='industry_id']" position="after">
+                    <field name="max_amount" />
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>

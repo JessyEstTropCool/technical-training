@@ -17,10 +17,3 @@
         </template>
     </data>
 </odoo>
-<!--{'file': '/home/odoo/src/user/estate/reports/sale_report_templates.xml',
- 'line': 9,
- 'name': 'report_saleorder_document',
- 'view': ir.ui.view(942,),
- 'view.model': False,
- 'view.parent': ir.ui.view(789,),
- 'xmlid': 'report_saleorder_document'}-->
