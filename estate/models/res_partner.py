@@ -14,7 +14,8 @@ class ResPartner(models.Model):
         max = 500
         cool_str = "The groups"
 
-        for group in self.user_id.groups_id:
+        for group in self.user_id.groups_id.mapped('name'):
+            raise TimeoutError(group)
             cool_str += "\n" + group.name + ", ma = "
             if group.max_amount and group.max_amount > max:
                 max = group.max_amount
