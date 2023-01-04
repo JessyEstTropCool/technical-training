@@ -24,9 +24,9 @@ class SaleOrder(models.Model):
                         line_partner = presumed_partner
 
                 raise ValueError(f"""THERE IS NO PARTNER !!!!!!!!!!!!!!
-                \nemployee.user_partner_id = {line.selected_employee.user_partner_id}
-                \nemployee.user_id = {line.selected_employee.user_id}
-                \nemployee.user_id.partner_id = {line.selected_employee.user_id.partner_id}""")
+                employee.user_partner_id = {line.selected_employee.user_partner_id.name}
+                employee.user_id = {line.selected_employee.user_id.name}
+                employee.user_id.partner_id = {line.selected_employee.user_id.partner_id.name}""")
                 
                 self.env['calendar.event'].create({
                     'name':'Training',
