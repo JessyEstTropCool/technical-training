@@ -82,7 +82,7 @@ class SaleOrder(models.Model):
                 self.activity_schedule(
                     'Need approval for quotation',
                     date_deadline=line.training_date,
-                    summary='Get a manager of high enough level to approve the quotationn',
+                    summary='Need approval for quotation, get a manager of high enough level to approve the quotation',
                     note=f'Total amount of the sale : {self.amount_total}'
                 )
 
