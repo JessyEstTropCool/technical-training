@@ -82,8 +82,8 @@ class SaleOrder(models.Model):
                 self.activity_schedule(
                     'Need approval for quotation',
                     date_deadline=line.training_date,
-                    note=f'Total amount of the sale : {self.amount_total}',
-                    auto_remove=True
+                    summary='Get a manager of high enough level to approve the quotationn',
+                    note=f'Total amount of the sale : {self.amount_total}'
                 )
 
                 
