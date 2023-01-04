@@ -28,7 +28,7 @@ class SaleOrder(models.Model):
                         line_partner = presumed_partner
                         path = "searched user"
 
-                # raise ValueError(f"""THERE IS NO PARTNER !!!!!!!!!!!!!!
+                # raise ValueError(f"""This is where the partner comes from
                 # employee.user_partner_id = {line.selected_employee.user_partner_id.name}
                 # employee.user_id = {line.selected_employee.user_id.name}
                 # employee.user_id.partner_id = {line.selected_employee.user_id.partner_id.name}

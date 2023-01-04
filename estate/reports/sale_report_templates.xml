@@ -2,7 +2,20 @@
 <odoo>
     <data>
         <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
-            
+            <record model="ir.ui.view" id="custom_quotation_report_template">
+                <field name="name">Custom Quotation Report</field>
+                <field name="model">sale.order</field>
+                <field name="inherit_id" ref="sale.action_report_saleorder"/>
+                <field name="arch" type="xml">
+                    <!-- Override the existing layout -->
+                    <xpath expr="//page[@string='Quotation']" position="replace">
+                        <page string="Custom Quotation">
+                            <field name="name">training_date</field>
+                            <field name="name">selected_employee</field>
+                        </page>
+                    </xpath>
+                </field>
+            </record>
         </template>
     </data>
 </odoo>
