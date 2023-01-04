@@ -22,6 +22,12 @@ class ResPartner(models.Model):
                 cool_str += str(group.max_amount)
 
         #self.message_post(body=f"Max amount (groups) = {max}")
-        raise TimeoutError(f"Max amount (groups) = {max}, \ng:{cool_str}\nself: {self}\ngroups:{self.user_id.groups_id}")
+        raise TimeoutError(f"""
+            Max amount (groups) = {max}, \n
+            g:{cool_str}\n
+            self: {self.name} {self}\n
+            self.user_id: {self.user_id.name} {self.user_id}\n
+            groups:{self.user_id.groups_id}"""
+        )
 
         return max
