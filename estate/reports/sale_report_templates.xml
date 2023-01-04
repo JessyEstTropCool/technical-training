@@ -8,8 +8,8 @@
                 <field name="inherit_id" ref="sale.action_report_saleorder"/>
                 <field name="arch" type="xml">
                     <!-- Override the existing layout -->
-                    <xpath expr="//page[@string='Quotation']" position="replace">
-                        <page string="Custom Quotation">
+                    <xpath expr="//page" position="replace">
+                        <page>
                             <field name="training_date" />
                             <field name="selected_employee" />
                         </page>
