@@ -6,7 +6,7 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form" />
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page[@name='sales_purchases']/group/group[@name='Misc']/field[@name='industry_id']" position="after">
+                <xpath expr="/form/sheet/notebook/page[@name='sales_purchases']/group/group[@name='misc']/field[@name='ref']" position="after">
                     <field name="max_amount" />
                 </xpath>
             </field>
