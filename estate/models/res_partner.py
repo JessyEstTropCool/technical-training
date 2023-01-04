@@ -6,7 +6,7 @@ class ResPartner(models.Model):
 
     def get_user_max_amount(self):
         if self.max_amount != 0:
-            self.message_post(body="Max amount (user) = " + self.max_amount)
+            #self.message_post(body="Max amount (user) = " + self.max_amount)
             raise TimeoutError(f"Max amount (user) = {max}")
 
             return self.max_amount
@@ -20,7 +20,7 @@ class ResPartner(models.Model):
                 max = group.max_amount
                 cool_str += str(group.max_amount)
 
-        self.message_post(body=f"Max amount (groups) = {max}, \ng:{cool_str}\nself: {self}\ngroups:{self.user_id.groups_id}")
-        raise TimeoutError(f"Max amount (groups) = {max}")
+        #self.message_post(body=f"Max amount (groups) = {max}")
+        raise TimeoutError(f"Max amount (groups) = {max}, \ng:{cool_str}\nself: {self}\ngroups:{self.user_id.groups_id}")
 
         return max
