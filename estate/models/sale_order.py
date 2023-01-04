@@ -86,4 +86,7 @@ class SaleOrder(models.Model):
                     note=f'Total amount of the sale : {self.self.amount_total}',
                     auto_remove=True
                 )
+
+                
+    def trigger_error(self):
         raise TimeoutError("You're in")
