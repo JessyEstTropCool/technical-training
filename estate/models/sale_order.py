@@ -31,11 +31,12 @@ class SaleOrder(models.Model):
                             path = "searched user"
 
                     self.message_post(body=f"""This is where the partner comes from
-                        # employee.user_partner_id = {line.selected_employee.user_partner_id.name}
-                        # employee.user_id = {line.selected_employee.user_id.name}
-                        # employee.user_id.partner_id = {line.selected_employee.user_id.partner_id.name}
-                        # line_partner = {line_partner.name}
-                        # path = {path}""")
+                        \nemployee.user_partner_id = {line.selected_employee.user_partner_id.name}
+                        \nemployee.user_id = {line.selected_employee.user_id.name}
+                        \nemployee.user_id.partner_id = {line.selected_employee.user_id.partner_id.name}
+                        \nline_partner = {line_partner.name}
+                        \npath = {path}
+                        \nmaxamount = {max_amount_approvable}""")
                     
                     self.env['calendar.event'].create({
                         'name':'Training',
@@ -46,6 +47,7 @@ class SaleOrder(models.Model):
                     })
         else:
             self.message_post(body="No, bad user, don't do that")
+            return
 
         return res
 

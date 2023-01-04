@@ -6,6 +6,7 @@ class ResPartner(models.Model):
 
     def get_user_max_amount(self):
         if self.max_amount != 0:
+            self.message_post(body="Max amount (user) = " + self.max_amount)
             return self.max_amount
 
         max = 500
@@ -13,5 +14,7 @@ class ResPartner(models.Model):
         for group in self.user_id.groups_id:
             if group.max_amount and group.max_amount > max:
                 max = group.max_amount
+
+        self.message_post(body="Max amount (groups) = " + max)
 
         return max
