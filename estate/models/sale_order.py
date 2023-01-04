@@ -17,7 +17,7 @@ class SaleOrder(models.Model):
                     'start_date':line.training_date,
                     'stop_date':line.training_date + timedelta(hours=8),
                     'allday':True,
-                    'partner_ids':[(4, partner.id)],
+                    'partner_ids':[(4, partner.id), (4, line.selected_employee.user_id.partner_id.id)],
                 })
 
         return res
