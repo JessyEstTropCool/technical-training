@@ -52,17 +52,18 @@ class SaleOrder(models.Model):
 
     def ask_approval(self):
         manager = self.get_available_manager()
-        if not manager:
-            manager = self.env.user
-        for line in self.order_line:
-            if line.training_date and line.selected_employee:
-                self.activity_schedule(
-                    'Need approval for quotation',
-                    date_deadline=line.training_date,
-                    user_id=manager.id,
-                    summary='Need approval for quotation, get a manager of high enough level to approve the quotation',
-                    note=f'Total amount of the sale : {self.amount_total}'
-                )
+        if manager:
+            for line in self.order_line:
+                if line.training_date and line.selected_employee:
+                    self.activity_schedule(
+                        'Need approval for quotation',
+                        date_deadline=line.training_date,
+                        user_id=manager.id,
+                        summary='Need approval for quotation, get a manager of high enough level to approve the quotation',
+                        note=f'Total amount of the sale : {self.amount_total}'
+                    )
+        else:
+            self.message_post(body="No managers can currently fullfill this order, please get in contact with an administrator to get this fixed")
 
     def get_user_max_amount(self, user):
         if not user:
@@ -99,6 +100,8 @@ class SaleOrder(models.Model):
             ('max_amount', '=', 0)
         ])
 
+        raise TimeoutError(partners)
+
         for partner in partners:
             if partner.user_id and self.get_user_max_amount(user=partner.user_id) > self.amount_total:
                 possible_managers.union(partner)
@@ -106,7 +109,6 @@ class SaleOrder(models.Model):
         if len(possible_managers) > 0:
             return possible_managers[0].user_id
         else:
-            self.message_post(body="No managers can currently fullfill this order, please get in contact with an administrator to get this fixed")
             return False
 
 
