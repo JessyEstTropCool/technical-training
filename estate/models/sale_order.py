@@ -57,12 +57,15 @@ class SaleOrder(models.Model):
         if manager:
             for line in self.order_line:
                 if line.training_date and line.selected_employee:
+                    recurring_note = ""
+                    if line.recurring:
+                        recurring_note = "and the training is set to be recurring"
                     self.activity_schedule(
                         'Need approval for quotation',
                         date_deadline=line.training_date,
                         user_id=manager.id,
                         summary='Need approval for quotation, get a manager of high enough level to approve the quotation',
-                        note=f'Total amount of the sale : {self.amount_total}'
+                        note=f'Total amount of the sale : {self.amount_total} {recurring_note}'
                     )
         else:
             self.message_post(body="No managers can currently fullfill this order, please get in contact with an administrator to get this fixed")
