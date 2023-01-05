@@ -94,8 +94,8 @@ class SaleOrder(models.Model):
     def get_available_manager(self):
         possible_managers = self.env['res.partner'].browse([])
         partners = self.env['res.partner'].search([
-            ('max_amount', '>', self.amount_total),
             '|',
+            ('max_amount', '>', self.amount_total),
             ('max_amount', '=', 0)
         ])
 
