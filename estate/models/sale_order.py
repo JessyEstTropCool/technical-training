@@ -120,7 +120,7 @@ class SaleOrder(models.Model):
         if len(possible_managers) > 0:
             return possible_managers[0]
         else:
-            return False
+            return self.env.user
 
 
 
