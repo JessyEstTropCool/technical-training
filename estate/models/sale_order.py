@@ -42,6 +42,8 @@ class SaleOrder(models.Model):
                         'start_date':line.training_date,
                         'stop_date':line.training_date + timedelta(hours=8),
                         'allday':True,
+                        'recurrency':line.recurring,
+                        'rrule':"FREQ=WEEKLY",
                         'partner_ids':[(4, line_partner.id)],
                     })
         else:
