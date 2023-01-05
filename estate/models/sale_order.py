@@ -6,7 +6,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     def action_confirm(self):
-        max_amount_approvable = self.get_user_max_amount()
+        max_amount_approvable = self.get_user_max_amount(user=self.env.user)
 
         if max_amount_approvable >= self.amount_total:
             for line in self.order_line:
@@ -50,8 +50,23 @@ class SaleOrder(models.Model):
 
         return super(SaleOrder, self).action_confirm()
 
-    def get_user_max_amount(self):
-        user = self.env.user
+    def ask_approval(self):
+        manager = self.get_available_manager()
+        if not manager:
+            manager = self.env.user
+        for line in self.order_line:
+            if line.training_date and line.selected_employee:
+                self.activity_schedule(
+                    'Need approval for quotation',
+                    date_deadline=line.training_date,
+                    user_id=manager,
+                    summary='Need approval for quotation, get a manager of high enough level to approve the quotation',
+                    note=f'Total amount of the sale : {self.amount_total}'
+                )
+
+    def get_user_max_amount(self, user):
+        if not user:
+            user = self.env.user
         if user.partner_id.max_amount != 0:
             #self.message_post(body=f"Max amount (user) = {user.partner_id.max_amount}")
             return user.partner_id.max_amount
@@ -76,16 +91,23 @@ class SaleOrder(models.Model):
 
         return max
 
-    def ask_approval(self):
-        for line in self.order_line:
-            if line.training_date and line.selected_employee:
-                self.activity_schedule(
-                    'Need approval for quotation',
-                    date_deadline=line.training_date,
-                    summary='Need approval for quotation, get a manager of high enough level to approve the quotation',
-                    note=f'Total amount of the sale : {self.amount_total}'
-                )
+    def get_available_manager(self):
+        possible_managers = self.env['res.partner'].browse([])
+        partners = self.env['res.partner'].search([
+            ('max_amount', '>', self.amount_total),
+            '|',
+            ('max_amount', '=', '0')
+        ])
 
-                
-    def trigger_error(self):
-        raise TimeoutError("You're in")
+        for partner in partners:
+            if partner.user_id and self.get_user_max_amount(user=partner.user_id) > self.amount_total:
+                possible_managers.union(partner)
+
+        if len(possible_managers) > 0:
+            return possible_managers[0].user_id
+        else:
+            self.message_post(body="No managers can currently fullfill this order, please get in contact with an administrator to get this fixed")
+            return False
+
+
+
