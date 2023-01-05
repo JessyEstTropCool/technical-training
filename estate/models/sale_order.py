@@ -97,7 +97,7 @@ class SaleOrder(models.Model):
         partners = self.env['res.users'].search([
             #'|',
             #('max_amount', '>', self.amount_total),
-            ('parter_id.max_amount', '=', 0)
+            ('partner_id.max_amount', '=', 0)
         ])
 
         cool = ""
