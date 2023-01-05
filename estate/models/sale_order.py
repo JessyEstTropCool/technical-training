@@ -102,7 +102,7 @@ class SaleOrder(models.Model):
 
         cool = ""
         for partner in partners:
-            cool += partner.name + " (" + partner.user_id + "), "
+            cool += partner.name + " (" + str(partner.user_id) + "), "
             if partner.user_id and self.get_user_max_amount(user=partner.user_id) > self.amount_total:
                 possible_managers.union(partner)
 
