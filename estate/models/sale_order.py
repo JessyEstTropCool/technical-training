@@ -93,17 +93,17 @@ class SaleOrder(models.Model):
         return max
 
     def get_available_manager(self):
-        possible_managers = self.env['res.partner'].browse([])
-        partners = self.env['res.partner'].search([
+        possible_managers = self.env['res.users'].browse([])
+        partners = self.env['res.users'].search([
             #'|',
             #('max_amount', '>', self.amount_total),
-            ('max_amount', '=', 0)
+            ('parter_id.max_amount', '=', 0)
         ])
 
         cool = ""
         for partner in partners:
-            cool += partner.name + " (" + str(partner.user_id) + "), "
-            if partner.user_id and self.get_user_max_amount(user=partner.user_id) > self.amount_total:
+            cool += partner.name + " (" + partner.partner_id.name + ", " + str(partner.partner_id) + "), "
+            if partner and self.get_user_max_amount(user=partner) > self.amount_total:
                 possible_managers.union(partner)
 
         cool += "\n"
@@ -113,7 +113,7 @@ class SaleOrder(models.Model):
         raise TimeoutError(cool)
 
         if len(possible_managers) > 0:
-            return possible_managers[0].user_id
+            return possible_managers[0]
         else:
             return False
 
