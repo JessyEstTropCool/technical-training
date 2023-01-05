@@ -103,14 +103,14 @@ class SaleOrder(models.Model):
         cool = ""
         for partner in partners:
             cool += partner.name + " (" + partner.partner_id.name + ", " + str(partner.partner_id) + "), "
-            if partner and self.get_user_max_amount(user=partner) > self.amount_total:
+            if self.get_user_max_amount(user=partner) > self.amount_total:
                 possible_managers.union(partner)
 
         cool += "\n"
         for partner in possible_managers:
             cool += partner.name + ", "
 
-        raise TimeoutError(cool)
+        #raise TimeoutError(cool) #FIXME please idk what's happening
 
         if len(possible_managers) > 0:
             return possible_managers[0]
