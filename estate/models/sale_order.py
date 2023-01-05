@@ -110,7 +110,7 @@ class SaleOrder(models.Model):
         for partner in possible_managers:
             cool += partner.name + ", "
 
-        raise TimeoutError(partners)
+        raise TimeoutError(cool)
 
         if len(possible_managers) > 0:
             return possible_managers[0].user_id
