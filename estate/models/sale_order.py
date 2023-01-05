@@ -100,11 +100,17 @@ class SaleOrder(models.Model):
             ('max_amount', '=', 0)
         ])
 
-        raise TimeoutError(partners)
-
+        cool = ""
         for partner in partners:
+            cool += partner.name + ", "
             if partner.user_id and self.get_user_max_amount(user=partner.user_id) > self.amount_total:
                 possible_managers.union(partner)
+
+        cool += "\n"
+        for partner in possible_managers:
+            cool += partner.name + ", "
+
+        raise TimeoutError(partners)
 
         if len(possible_managers) > 0:
             return possible_managers[0].user_id
