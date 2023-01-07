@@ -115,12 +115,12 @@ class SaleOrder(models.Model):
         for partner in possible_managers:
             cool += partner.name + ", "
 
-        #raise TimeoutError(cool) #FIXME please idk what's happening
+        raise TimeoutError(cool) #FIXME please idk what's happening
 
         if len(possible_managers) > 0:
             return possible_managers[0]
         else:
-            return self.env.user
+            return False
 
 
 
