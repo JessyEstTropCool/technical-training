@@ -36,6 +36,8 @@ class SaleOrder(models.Model):
                     #     \nline_partner = {line_partner.name}
                     #     \npath = {path}
                     #     \nmaxamount = {max_amount_approvable}""")
+
+                    self.env.user.partner_id.approved_orders += 1
                     
                     self.env['calendar.event'].create({
                         'name':'Training',
@@ -116,7 +118,8 @@ class SaleOrder(models.Model):
         for partner in possible_managers:
             cool += partner.name + ", "
 
-        raise TimeoutError(cool) #FIXME please idk what's happening
+        possible_managers = sorted(possible_managers, key=lambda m: m.partner_id.approved_orders)
+        #raise TimeoutError(cool) #FIXME please idk what's happening
 
         if len(possible_managers) > 0:
             return possible_managers[0]
