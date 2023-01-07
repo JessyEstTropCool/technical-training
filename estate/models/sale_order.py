@@ -99,11 +99,7 @@ class SaleOrder(models.Model):
 
     def get_available_manager(self):
         possible_managers = self.env['res.users'].browse([])
-        partners = self.env['res.users'].search([
-            #'|',
-            #('max_amount', '>', self.amount_total),
-            ('partner_id.max_amount', '=', 0)
-        ])
+        partners = self.env['res.users'].search([])
 
         cool = ""
         for partner in partners:
