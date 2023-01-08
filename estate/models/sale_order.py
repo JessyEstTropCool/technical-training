@@ -12,10 +12,8 @@ class SaleOrder(models.Model):
             for line in self.order_line:
                 if line.training_date and line.selected_employee:
                     line_partner = None
-                    #path = "None"
                     if line.selected_employee.user_id:
                         line_partner = line.selected_employee.user_partner_id
-                        #path = "has user"
                     else:
                         presumed_partner = self.env['res.partner'].search([('name', '=', line.selected_employee.name)], limit=1)
                         if len(presumed_partner) == 0:
@@ -23,19 +21,9 @@ class SaleOrder(models.Model):
                                 'name': line.selected_employee.name,
                             })
                             line_partner = line.selected_employee.user_partner_id
-                            #path = "new user"
                         else:
                             line.selected_employee.user_partner_id = presumed_partner
                             line_partner = presumed_partner
-                            #path = "searched user"
-
-                    # self.message_post(body=f"""This is where the partner comes from
-                    #     \nemployee.user_partner_id = {line.selected_employee.user_partner_id.name}
-                    #     \nemployee.user_id = {line.selected_employee.user_id.name}
-                    #     \nemployee.user_id.partner_id = {line.selected_employee.user_id.partner_id.name}
-                    #     \nline_partner = {line_partner.name}
-                    #     \npath = {path}
-                    #     \nmaxamount = {max_amount_approvable}""")
 
                     self.env.user.partner_id.approved_orders += 1
                     
@@ -70,7 +58,7 @@ class SaleOrder(models.Model):
                         note=f'Total amount of the sale : {self.amount_total} {recurring_note}'
                     )
         else:
-            self.message_post(body="No managers can currently fullfill this order, please get in contact with an administrator to get this fixed")
+            self.message_post(body="No managers can currently fullfill this order, please get in contact with an administrator to get this fixed, or try deviding your order into multiple ones")
 
     def get_user_max_amount(self, user):
         if not user:
@@ -79,7 +67,6 @@ class SaleOrder(models.Model):
             return user.partner_id.max_amount
 
         max = self.env['res.groups'].default_get(['max_amount'])['max_amount']
-        raise TimeoutError(max)
 
         for group in user.groups_id:
             if group.max_amount and group.max_amount > max:
