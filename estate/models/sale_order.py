@@ -76,50 +76,26 @@ class SaleOrder(models.Model):
         if not user:
             user = self.env.user
         if user.partner_id.max_amount != 0:
-            #self.message_post(body=f"Max amount (user) = {user.partner_id.max_amount}")
             return user.partner_id.max_amount
 
-        max = 500
-        #cool_str = "The groups"
+        max = self.env['res.groups'].default_get(['max_amount']).max_amount
+        raise TimeoutError(max)
 
         for group in user.groups_id:
-            # cool_str += "\n" + group.name + ", ma = "
-            # if group.max_amount:
-            #     cool_str += str(group.max_amount)
-
             if group.max_amount and group.max_amount > max:
                 max = group.max_amount
-
-        # self.message_post(body=f"""
-        #     Max amount (groups) = {max},
-        #     g:{cool_str}
-        #     self: {self.name} {self}
-        #     self.user_id: {self.user_id.name} {self.user_id}
-        #     groups:{self.user_id.groups_id}""")
 
         return max
 
     def get_available_manager(self):
         possible_managers = self.env['res.users'].browse([])
-        partners = self.env['res.users'].search([
-            #'|',
-            #('max_amount', '>', self.amount_total),
-            #('partner_id.max_amount', '=', 0.0)
-            #FIXME Search filter didn't work 
-        ])
+        users = self.env['res.users'].search([])
 
-        cool = ""
-        for partner in partners:
-            cool += partner.name + " (" + partner.partner_id.name + ", " + str(partner.partner_id.max_amount) + ", " + str(partner.partner_id) + "), "
-            if partner.partner_id.max_amount > self.amount_total or (partner.partner_id.max_amount == 0 and self.get_user_max_amount(user=partner) > self.amount_total):
-                possible_managers = possible_managers.union(partner)
-
-        cool += "\n"
-        for partner in possible_managers:
-            cool += partner.name + ", "
+        for user in users:
+            if user.partner_id.max_amount > self.amount_total or (user.partner_id.max_amount == 0 and self.get_user_max_amount(user=user) > self.amount_total):
+                possible_managers = possible_managers.union(user)
 
         possible_managers = sorted(possible_managers, key=lambda m: m.partner_id.approved_orders)
-        #raise TimeoutError(cool) #FIXME please idk what's happening
 
         if len(possible_managers) > 0:
             return possible_managers[0]
