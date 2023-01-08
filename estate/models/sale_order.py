@@ -78,7 +78,7 @@ class SaleOrder(models.Model):
         if user.partner_id.max_amount != 0:
             return user.partner_id.max_amount
 
-        max = self.env['res.groups'].default_get(['max_amount']).max_amount
+        max = self.env['res.groups'].default_get(['max_amount'])['max_amount']
         raise TimeoutError(max)
 
         for group in user.groups_id:
