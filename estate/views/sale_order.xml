@@ -19,7 +19,7 @@
             <field name="inherit_id" ref="sale.view_order_form" />
             <field name="arch" type="xml">
                 <xpath expr="/form/header/field[@name='state']" position="after">
-                    <button name="ask_approval" string="Ask Approval" type="object" attrs="{'invisible': ['|', ('state', 'not in', ['draft', 'sent']), ('id', '=', False)]}"/>
+                    <button name="ask_approval" string="Ask Approval" type="object" attrs="{'invisible': ['|', ('state', 'not in', ['draft']), ('id', '=', False)]}"/>
                 </xpath>
             </field>
         </record>
